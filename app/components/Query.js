@@ -25,21 +25,20 @@ var Child = React.createClass({
 
 		return(
 
-			<div className="panel panel-default">
+			<div className="panel panel-primary">
 				<div className="panel-heading">
 					<h3 className="panel-title">Search</h3>
 				</div>
 				<div className="panel-body text-center">
-					Term
-					<input type="text" value={this.state.term} className="form-control" id="term" onChange={this.handleChange} />
-					<br />
-					Start Year
-					<input type="text" value={this.state.start} className="form-control" id="start" onChange={this.handleChange} />
-					<br />
-					End Year
-					<input type="text" value={this.state.end} className="form-control" id="end" onChange={this.handleChange} />
-					<br />
-					<button onClick={this.submitChanges} className="btn btn-info">Search</button>
+					<div className="form-group">
+						<h4 className="pull-left"><strong>Term</strong></h4>
+						<input type="text" value={this.state.term} className="form-control" id="term" onChange={this.handleChange} />
+						<h4 className="pull-left"><strong>Start Year</strong></h4>
+						<input type="text" value={this.state.start} className="form-control" id="start" onChange={this.handleChange} />
+						<h4 className="pull-left"><strong>End Year</strong></h4>
+						<input type="text" value={this.state.end} className="form-control" id="end" onChange={this.handleChange} />
+					</div>
+					<button type="submit" onClick={this.submitChanges} className="btn btn-danger pull-right"><span className="glyphicon glyphicon-search"></span> Search</button>
 				</div>
 			</div>
 		)

@@ -8,17 +8,17 @@ var Parent = React.createClass({
 	getInitialState: function(){
 		return({
 			query: {
-				term: "Coding",
-				start: "2016",
-				end: "2016"
+				term: "",
+				start: "",
+				end: ""
 			},
 			lastQuery: {
-				term: "Coding",
-				start: "2016",
-				end: "2016"
+				term: "",
+				start: "",
+				end: ""
 			},
 			results: [],
-			saved: [{headline: {main: "No Saved Articles"}}]
+			saved: []
 		})
 	},
 	setQuery: function(query){
@@ -30,7 +30,7 @@ var Parent = React.createClass({
 		this.getSavedArticles()
 	},
 	componentDidUpdate: function(){
-		if(this.state.query != this.state.lastQuery){
+		if(this.state.query != this.state.lastQuery && this.state.query.term != ""){
 			this.setState({
 				lastQuery: this.state.query
 			})
@@ -52,18 +52,24 @@ var Parent = React.createClass({
 
 		return(
 
-			<div className="container">
+			<div className="container-fluid">
 				<div className="row">
-					<div className="jumbotron text-center">
-						<h2>NY Times Search</h2>
-						<p><em>Search and save New York Times articles by key terms.</em></p>
+					<div className="panel panel-primary">
+						<div className="panel-heading">
+							<br />
+							<h1 className="text-center"><strong><i className="fa fa-newspaper-o"></i> New York Times Article Search</strong></h1>
+							<h3 className="text-center">Search for and save articles of interest.</h3>
+							<br />
+						</div>
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-md-6">
+					<div className="col-md-12">
 						<Query setQuery={this.setQuery} />
 					</div>
-					<div className="col-md-6">
+				</div>
+				<div className="row">
+					<div className="col-md-12">
 						<Results res={this.state.results} getNewSaved={this.getSavedArticles} />
 					</div>
 				</div>

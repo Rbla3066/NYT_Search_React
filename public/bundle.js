@@ -19678,17 +19678,17 @@
 		getInitialState: function getInitialState() {
 			return {
 				query: {
-					term: "Coding",
-					start: "2016",
-					end: "2016"
+					term: "",
+					start: "",
+					end: ""
 				},
 				lastQuery: {
-					term: "Coding",
-					start: "2016",
-					end: "2016"
+					term: "",
+					start: "",
+					end: ""
 				},
 				results: [],
-				saved: [{ headline: { main: "No Saved Articles" } }]
+				saved: []
 			};
 		},
 		setQuery: function setQuery(query) {
@@ -19700,7 +19700,7 @@
 			this.getSavedArticles();
 		},
 		componentDidUpdate: function componentDidUpdate() {
-			if (this.state.query != this.state.lastQuery) {
+			if (this.state.query != this.state.lastQuery && this.state.query.term != "") {
 				this.setState({
 					lastQuery: this.state.query
 				});
@@ -19722,26 +19722,33 @@
 
 			return React.createElement(
 				'div',
-				{ className: 'container' },
+				{ className: 'container-fluid' },
 				React.createElement(
 					'div',
 					{ className: 'row' },
 					React.createElement(
 						'div',
-						{ className: 'jumbotron text-center' },
+						{ className: 'panel panel-primary' },
 						React.createElement(
-							'h2',
-							null,
-							'NY Times Search'
-						),
-						React.createElement(
-							'p',
-							null,
+							'div',
+							{ className: 'panel-heading' },
+							React.createElement('br', null),
 							React.createElement(
-								'em',
-								null,
-								'Search and save New York Times articles by key terms.'
-							)
+								'h1',
+								{ className: 'text-center' },
+								React.createElement(
+									'strong',
+									null,
+									React.createElement('i', { className: 'fa fa-newspaper-o' }),
+									' New York Times Article Search'
+								)
+							),
+							React.createElement(
+								'h3',
+								{ className: 'text-center' },
+								'Search for and save articles of interest.'
+							),
+							React.createElement('br', null)
 						)
 					)
 				),
@@ -19750,12 +19757,16 @@
 					{ className: 'row' },
 					React.createElement(
 						'div',
-						{ className: 'col-md-6' },
+						{ className: 'col-md-12' },
 						React.createElement(Query, { setQuery: this.setQuery })
-					),
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'row' },
 					React.createElement(
 						'div',
-						{ className: 'col-md-6' },
+						{ className: 'col-md-12' },
 						React.createElement(Results, { res: this.state.results, getNewSaved: this.getSavedArticles })
 					)
 				),
@@ -19808,7 +19819,7 @@
 
 			return React.createElement(
 				"div",
-				{ className: "panel panel-default" },
+				{ className: "panel panel-primary" },
 				React.createElement(
 					"div",
 					{ className: "panel-heading" },
@@ -19821,19 +19832,45 @@
 				React.createElement(
 					"div",
 					{ className: "panel-body text-center" },
-					"Term",
-					React.createElement("input", { type: "text", value: this.state.term, className: "form-control", id: "term", onChange: this.handleChange }),
-					React.createElement("br", null),
-					"Start Year",
-					React.createElement("input", { type: "text", value: this.state.start, className: "form-control", id: "start", onChange: this.handleChange }),
-					React.createElement("br", null),
-					"End Year",
-					React.createElement("input", { type: "text", value: this.state.end, className: "form-control", id: "end", onChange: this.handleChange }),
-					React.createElement("br", null),
+					React.createElement(
+						"div",
+						{ className: "form-group" },
+						React.createElement(
+							"h4",
+							{ className: "pull-left" },
+							React.createElement(
+								"strong",
+								null,
+								"Term"
+							)
+						),
+						React.createElement("input", { type: "text", value: this.state.term, className: "form-control", id: "term", onChange: this.handleChange }),
+						React.createElement(
+							"h4",
+							{ className: "pull-left" },
+							React.createElement(
+								"strong",
+								null,
+								"Start Year"
+							)
+						),
+						React.createElement("input", { type: "text", value: this.state.start, className: "form-control", id: "start", onChange: this.handleChange }),
+						React.createElement(
+							"h4",
+							{ className: "pull-left" },
+							React.createElement(
+								"strong",
+								null,
+								"End Year"
+							)
+						),
+						React.createElement("input", { type: "text", value: this.state.end, className: "form-control", id: "end", onChange: this.handleChange })
+					),
 					React.createElement(
 						"button",
-						{ onClick: this.submitChanges, className: "btn btn-info" },
-						"Search"
+						{ type: "submit", onClick: this.submitChanges, className: "btn btn-danger pull-right" },
+						React.createElement("span", { className: "glyphicon glyphicon-search" }),
+						" Search"
 					)
 				)
 			);
@@ -19866,64 +19903,100 @@
 				});
 			}
 		},
-		handleSave: function handleSave(event) {
-			helpers.addArticle(this.state.results[event.target.id], function () {
-				this.props.getNewSaved();
-			}.bind(this));
+		handleSave: function handleSave(i) {
+			if (this.state.results[i]) {
+				helpers.addArticle(this.state.results[i], function () {
+					this.props.getNewSaved();
+				}.bind(this));
+			}
 		},
 		render: function render() {
-
-			return React.createElement(
-				'div',
-				{ className: 'panel panel-default' },
-				React.createElement(
+			if (this.state.results.length == undefined || this.state.results.length == 0) {
+				return React.createElement(
 					'div',
-					{ className: 'panel-heading' },
+					null,
 					React.createElement(
 						'h3',
-						{ className: 'panel-title' },
-						'Results'
-					)
-				),
-				React.createElement(
+						null,
+						'Enter Search Terms to begin, or check out these saved articles... '
+					),
+					React.createElement('br', null)
+				);
+			} else {
+				return React.createElement(
 					'div',
-					{ className: 'panel-body text-center' },
+					{ className: 'panel panel-primary' },
 					React.createElement(
-						'table',
-						{ className: 'table' },
+						'div',
+						{ className: 'panel-heading' },
 						React.createElement(
-							'tbody',
-							null,
-							this.state.results.map(function (result, i) {
-								return React.createElement(
-									'tr',
-									{ key: result._id },
-									React.createElement(
-										'td',
-										null,
-										i + 1,
-										'.) '
-									),
-									React.createElement(
-										'td',
-										null,
-										result.headline.main
-									),
-									React.createElement(
-										'td',
-										null,
+							'h3',
+							{ className: 'panel-title' },
+							'Results'
+						)
+					),
+					React.createElement(
+						'div',
+						{ className: 'panel-body text-center' },
+						React.createElement(
+							'table',
+							{ className: 'table' },
+							React.createElement(
+								'tbody',
+								null,
+								this.state.results.map(function (result, i) {
+									return React.createElement(
+										'tr',
+										{ key: result._id },
 										React.createElement(
-											'button',
-											{ className: 'btn btn-info', id: i, onClick: this.handleSave },
-											'Save'
+											'td',
+											null,
+											React.createElement(
+												'h4',
+												null,
+												React.createElement(
+													'strong',
+													null,
+													result.headline.main
+												)
+											)
+										),
+										React.createElement(
+											'td',
+											null,
+											result.byline.original
+										),
+										React.createElement(
+											'td',
+											null,
+											React.createElement(
+												'a',
+												{ href: result.web_url },
+												React.createElement(
+													'button',
+													{ className: 'btn btn-primary' },
+													React.createElement('i', { className: 'fa fa-newspaper-o' }),
+													' Read'
+												)
+											)
+										),
+										React.createElement(
+											'td',
+											null,
+											React.createElement(
+												'button',
+												{ className: 'btn btn-danger', onClick: this.handleSave.bind(null, i) },
+												React.createElement('span', { className: 'glyphicon glyphicon-download-alt' }),
+												' Save'
+											)
 										)
-									)
-								);
-							}.bind(this))
+									);
+								}.bind(this))
+							)
 						)
 					)
-				)
-			);
+				);
+			}
 		}
 	});
 
@@ -19939,8 +20012,9 @@
 
 	var helpers = {
 		searchArticles: function searchArticles(query, callback) {
-			return axios.get("http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query.term + "&begin_date=" + query.start + "0101&end_date=" + query.end + "1231&api-key=6161a8c862c0ede0057f4230432e6fe5:1:74629269").then(function (data) {
+			return axios.get("http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query.term + "&begin_date=" + query.start + "0101&end_date=" + query.end + "1231&api-key=e05abfb61c5346fea5bf75beb92d714e").then(function (data) {
 				return callback(data);
+				console.log(data);
 			});
 		},
 		getSavedArticles: function getSavedArticles(callback) {
@@ -21187,7 +21261,7 @@
 
 		getInitialState: function getInitialState() {
 			return {
-				saved: [{ headline: { main: "No Saved Articles" } }]
+				saved: []
 			};
 		},
 		componentDidUpdate: function componentDidUpdate() {
@@ -21197,64 +21271,97 @@
 				});
 			}
 		},
-		handleDelete: function handleDelete(event) {
-			helpers.deleteArticle({ _id: this.state.saved[event.target.id]._id }, function () {
+		handleDelete: function handleDelete(i) {
+			helpers.deleteArticle({ _id: this.state.saved[i]._id }, function () {
 				this.props.getNewSaved();
 			}.bind(this));
 		},
 		render: function render() {
-
-			return React.createElement(
-				'div',
-				{ className: 'panel panel-default' },
-				React.createElement(
+			if (this.state.saved.length == undefined || this.state.saved.length == 0) {
+				return React.createElement(
 					'div',
-					{ className: 'panel-heading' },
+					null,
 					React.createElement(
-						'h3',
-						{ className: 'panel-title' },
-						'Saved'
+						'h2',
+						null,
+						' No Saved Articles '
 					)
-				),
-				React.createElement(
+				);
+			} else {
+				return React.createElement(
 					'div',
-					{ className: 'panel-body text-center' },
+					{ className: 'panel panel-primary' },
 					React.createElement(
-						'table',
-						{ className: 'table' },
+						'div',
+						{ className: 'panel-heading' },
 						React.createElement(
-							'tbody',
-							null,
-							this.state.saved.map(function (result, i) {
-								return React.createElement(
-									'tr',
-									{ key: i + 1000 },
-									React.createElement(
-										'td',
-										null,
-										i + 1,
-										'.) '
-									),
-									React.createElement(
-										'td',
-										null,
-										result.headline.main
-									),
-									React.createElement(
-										'td',
-										null,
+							'h3',
+							{ className: 'panel-title' },
+							'Saved'
+						)
+					),
+					React.createElement(
+						'div',
+						{ className: 'panel-body text-center' },
+						React.createElement(
+							'table',
+							{ className: 'table table-striped' },
+							React.createElement(
+								'tbody',
+								null,
+								this.state.saved.map(function (result, i) {
+									return React.createElement(
+										'tr',
+										{ key: i + 1000 },
 										React.createElement(
-											'button',
-											{ className: 'btn btn-info', id: i, onClick: this.handleDelete },
-											'Delete'
+											'td',
+											null,
+											React.createElement(
+												'h4',
+												null,
+												React.createElement(
+													'strong',
+													null,
+													result.headline.main
+												)
+											)
+										),
+										React.createElement(
+											'td',
+											null,
+											result.byline.original
+										),
+										React.createElement(
+											'td',
+											null,
+											React.createElement(
+												'a',
+												{ href: result.web_url },
+												React.createElement(
+													'button',
+													{ className: 'btn btn-primary' },
+													React.createElement('i', { className: 'fa fa-newspaper-o' }),
+													' Read'
+												)
+											)
+										),
+										React.createElement(
+											'td',
+											null,
+											React.createElement(
+												'button',
+												{ className: 'btn btn-danger', onClick: this.handleDelete.bind(null, i) },
+												React.createElement('span', { className: 'glyphicon glyphicon-trash' }),
+												' Delete'
+											)
 										)
-									)
-								);
-							}.bind(this))
+									);
+								}.bind(this))
+							)
 						)
 					)
-				)
-			);
+				);
+			}
 		}
 	});
 
