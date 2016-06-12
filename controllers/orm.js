@@ -1,5 +1,5 @@
 var mongojs = require('mongojs');
-var db = mongojs('test', ['articles'])
+var db = mongojs('mongodb://rbla3066:Coolbeans777@ds013574.mlab.com:13574/heroku_45wd0vw6', ['articles'])
 
 var orm = {
 	findAll: function(callback){
