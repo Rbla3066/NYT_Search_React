@@ -33,7 +33,7 @@ var Child = React.createClass({
 						<h3 className="panel-title">Saved</h3>
 					</div>
 					<div className="panel-body text-center">
-						<table className="table table-striped">
+						<table className="table table-bordered table-hover">
 						<tbody>{this.state.saved.map(function(result, i){
 							return (
 								<tr key={i + 1000}>

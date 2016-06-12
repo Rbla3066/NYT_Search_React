@@ -37,7 +37,7 @@ var Child = React.createClass({
 						<h3 className="panel-title">Results</h3>
 					</div>
 					<div className="panel-body text-center">
-						<table className="table">
+						<table className="table table-hover table-bordered">
 						<tbody>{this.state.results.map(function(result, i){
 							return (
 								<tr key={result._id}>

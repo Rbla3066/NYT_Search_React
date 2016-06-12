@@ -19940,7 +19940,7 @@
 						{ className: 'panel-body text-center' },
 						React.createElement(
 							'table',
-							{ className: 'table' },
+							{ className: 'table table-hover table-bordered' },
 							React.createElement(
 								'tbody',
 								null,
@@ -21305,7 +21305,7 @@
 						{ className: 'panel-body text-center' },
 						React.createElement(
 							'table',
-							{ className: 'table table-striped' },
+							{ className: 'table table-bordered table-hover' },
 							React.createElement(
 								'tbody',
 								null,
