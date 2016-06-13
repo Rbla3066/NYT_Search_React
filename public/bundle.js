@@ -20014,21 +20014,23 @@
 		searchArticles: function searchArticles(query, callback) {
 			return axios.get("http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query.term + "&begin_date=" + query.start + "0101&end_date=" + query.end + "1231&api-key=e05abfb61c5346fea5bf75beb92d714e").then(function (data) {
 				return callback(data);
-				console.log(data);
 			});
 		},
 		getSavedArticles: function getSavedArticles(callback) {
-			return axios.get("http://localhost:8080/api/all").then(function (data) {
+			var url = window.location.origin;
+			return axios.get(url + "/api/all").then(function (data) {
 				return callback(data);
 			});
 		},
 		addArticle: function addArticle(article, callback) {
-			return axios.post("http://localhost:8080/api/add", article).then(function (response) {
+			var url = window.location.origin;
+			return axios.post(url + "/api/add", article).then(function (response) {
 				return callback();
 			});
 		},
 		deleteArticle: function deleteArticle(id, callback) {
-			return axios.post("http://localhost:8080/api/delete", id).then(function (response) {
+			var url = window.location.origin;
+			return axios.post(url + "/api/delete", id).then(function (response) {
 				return callback();
 			});
 		}

@@ -8,19 +8,22 @@ var helpers = {
 			})
 	},
 	getSavedArticles: function(callback){
-		return axios.get("https://rb-nyt-search.herokuapp.com/api/all")
+		var url = window.location.origin;
+		return axios.get(url + "/api/all")
 			.then(function(data){
 				return callback(data);
 			})
 	},
 	addArticle: function(article, callback){
-		return axios.post("https://rb-nyt-search.herokuapp.com/api/add", article)
+		var url = window.location.origin;
+		return axios.post(url + "/api/add", article)
 			.then(function(response){
 				return callback()
 			})
 	},
 	deleteArticle: function(id, callback){
-		return axios.post("https://rb-nyt-search.herokuapp.com/api/delete", id)
+		var url = window.location.origin;
+		return axios.post("/api/delete", id)
 			.then(function(response){
 				return callback()
 			})
