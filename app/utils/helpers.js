@@ -23,7 +23,7 @@ var helpers = {
 	},
 	deleteArticle: function(id, callback){
 		var url = window.location.origin;
-		return axios.post("/api/delete", id)
+		return axios.post(url + "/api/delete", id)
 			.then(function(response){
 				return callback()
 			})
