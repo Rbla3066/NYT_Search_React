@@ -20017,20 +20017,18 @@
 			});
 		},
 		getSavedArticles: function getSavedArticles(callback) {
-			var url = window.location.origin;
-			return axios.get(url + "/api/all").then(function (data) {
+			return axios.get("http://rb-nyt-search.herokuapp.com/api/all").then(function (data) {
 				return callback(data);
 			});
 		},
 		addArticle: function addArticle(article, callback) {
 			var url = window.location.origin;
-			return axios.post(url + "/api/add", article).then(function (response) {
+			return axios.post("http://rb-nyt-search.herokuapp.com/api/add", article).then(function (response) {
 				return callback();
 			});
 		},
 		deleteArticle: function deleteArticle(id, callback) {
-			var url = window.location.origin;
-			return axios.post(url + "/api/delete", id).then(function (response) {
+			return axios.post("http://rb-nyt-search.herokuapp.com/api/delete", id).then(function (response) {
 				return callback();
 			});
 		}

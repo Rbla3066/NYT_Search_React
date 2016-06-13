@@ -8,22 +8,20 @@ var helpers = {
 			})
 	},
 	getSavedArticles: function(callback){
-		var url = window.location.origin;
-		return axios.get(url + "/api/all")
+		return axios.get("http://rb-nyt-search.herokuapp.com/api/all")
 			.then(function(data){
 				return callback(data);
 			})
 	},
 	addArticle: function(article, callback){
 		var url = window.location.origin;
-		return axios.post(url + "/api/add", article)
+		return axios.post("http://rb-nyt-search.herokuapp.com/api/add", article)
 			.then(function(response){
 				return callback()
 			})
 	},
 	deleteArticle: function(id, callback){
-		var url = window.location.origin;
-		return axios.post(url + "/api/delete", id)
+		return axios.post("http://rb-nyt-search.herokuapp.com/api/delete", id)
 			.then(function(response){
 				return callback()
 			})
